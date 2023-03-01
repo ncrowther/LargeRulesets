@@ -39,7 +39,7 @@ public class ColorRulesTest {
 
         assertNotNull(ruleRuntime);
 
-        ColorDecider colorDecider = new ColorDecider("Red", "Green", "Green");
+        ColorDecider colorDecider = new ColorDecider("Green", "Green", "Green");
 
         KieSession ksession = ruleRuntime.newKieSession();
         ((InternalAgenda) ksession.getAgenda()).activateRuleFlowGroup("R1_3_1");
@@ -48,7 +48,7 @@ public class ColorRulesTest {
 
         ksession.dispose();
 
-        assertEquals("Red", colorDecider.getColor());
+        assertEquals("Green", colorDecider.getColor());
     }
 
 }
