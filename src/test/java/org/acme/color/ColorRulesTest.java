@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.acme.swift;
+package org.acme.color;
 
 import javax.inject.Inject;
 
+import org.acme.ColorDecider;
 import org.drools.core.common.InternalAgenda;
 import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieRuntimeBuilder;
@@ -28,43 +29,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-public class RoutingRulesTest {
+public class ColorRulesTest {
 
     @Inject
     KieRuntimeBuilder ruleRuntime;
 
     @Test
-    public void testCHASCN2GRoutingRule() {
+    public void testRedGreenGreenRule() {
 
         assertNotNull(ruleRuntime);
 
-        SwiftTransaction swiftMessage = new SwiftTransaction("CHAS", "CN", "2G", "XXX", "");
+        ColorDecider colorDecider = new ColorDecider("Red", "Green", "Green");
 
         KieSession ksession = ruleRuntime.newKieSession();
-        ((InternalAgenda) ksession.getAgenda()).activateRuleFlowGroup("CnSwiftRouting");
-        ksession.insert(swiftMessage);
+        ((InternalAgenda) ksession.getAgenda()).activateRuleFlowGroup("R1_3_1");
+        ksession.insert(colorDecider);
         ksession.fireAllRules();
 
         ksession.dispose();
 
-        assertEquals("MT123", swiftMessage.getRoute());
-    }
-
-    @Test
-    public void testCHASUK1ARoutingRule() {
-
-        assertNotNull(ruleRuntime);
-
-        SwiftTransaction swiftMessage = new SwiftTransaction("CHAS", "UK", "1A", "XXX", "");
-
-        KieSession ksession = ruleRuntime.newKieSession();
-        ((InternalAgenda) ksession.getAgenda()).activateRuleFlowGroup("UKSwiftRouting");
-        ksession.insert(swiftMessage);
-        ksession.fireAllRules();
-
-        ksession.dispose();
-
-        assertEquals("MR123", swiftMessage.getRoute());
+        assertEquals("Red", colorDecider.getColor());
     }
 
 }
