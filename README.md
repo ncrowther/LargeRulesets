@@ -2,7 +2,11 @@
 
 ## Description
 
-Example PAM / DM demonstrating how to build large rulesets
+Example PAM / DM demonstrating how to build large rulesets using BPMN as orchestration and Excel as rule tables
+
+## Top level DMN
+
+<p align="Left"><img src="docs/images/bpmnRuleflow.png"></p>
 
 ### Installing and Running
 
